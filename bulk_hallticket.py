@@ -10,9 +10,6 @@ Output:
     generated/html/hallticket_<register_number>.html
     generated/pdf/hallticket_<register_number>.pdf
     generated/bulk_report.csv
-
-Run:
-    python hallticket_scraper.py
 """
 
 from __future__ import annotations
@@ -24,8 +21,6 @@ import time
 import re
 from datetime import date, datetime
 from pathlib import Path
-import tkinter as tk
-from tkinter import filedialog
 
 from openpyxl import load_workbook
 from selenium import webdriver
@@ -48,52 +43,6 @@ HERE = Path(__file__).resolve().parent
 IMAGE_EXTENSIONS = {
     ".png", ".jpg", ".jpeg", ".webp", ".bmp"
 }
-
-
-# ---------------------------------------------------------
-# File and folder selection
-# ---------------------------------------------------------
-
-def choose_input_file() -> Path:
-    root = tk.Tk()
-    root.withdraw()
-    root.attributes("-topmost", True)
-
-    try:
-        filename = filedialog.askopenfilename(
-            title="Select student Excel or CSV file",
-            filetypes=[
-                ("Excel and CSV files", "*.xlsx *.csv"),
-                ("Excel workbook", "*.xlsx"),
-                ("CSV file", "*.csv"),
-                ("All files", "*.*"),
-            ],
-        )
-    finally:
-        root.destroy()
-
-    if not filename:
-        raise SystemExit("No input file selected.")
-
-    return Path(filename)
-
-
-def choose_photo_folder() -> Path:
-    root = tk.Tk()
-    root.withdraw()
-    root.attributes("-topmost", True)
-
-    try:
-        folder = filedialog.askdirectory(
-            title="Select the folder containing student photos"
-        )
-    finally:
-        root.destroy()
-
-    if not folder:
-        raise SystemExit("No photo folder selected.")
-
-    return Path(folder)
 
 
 # ---------------------------------------------------------
